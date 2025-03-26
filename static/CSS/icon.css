@@ -1,0 +1,18 @@
+@media (max-width: 768px) {
+    #sidebar {
+        width: 60px;
+        text-align: center;
+    }
+
+    #sidebar ul li {
+        padding: 10px;
+    }
+
+    #sidebar ul li span {
+        display: none;
+    }
+
+    .content {
+        margin-left: 70px;
+    }
+}
