@@ -1,0 +1,11 @@
+<nav class="navbar">
+  <div class="nav-text nav-links"><a href="{{ url_for('home') }}">You are logged in as : {{session["username"]}}</a></div>
+  <div class="nav-links">
+      {% if page_name == "login" %}
+      <a href="{{ url_for('register') }}">Sign Up</a>
+      {% else %}
+      <a href="{{ url_for('logout') }}">Logout</a> 
+      {% endif %}
+      <a href="mailto:22f2001443@ds.study.iitm.ac.in">Contact</a>
+  </div>
+</nav>

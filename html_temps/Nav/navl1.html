@@ -1,0 +1,28 @@
+<nav class="navbar">
+    {% if session.get("user_id") %}
+    <div class="nav-text nav-links"><a href="{{ url_for('home') }}">You are logged in as : {{session["username"]}}</a></div>
+    {%else%}
+    <div class="nav-text nav-links" style="margin-left: 15px;"><a href="{{ url_for('home') }}">ABC Quiz Portal</a></div>
+    {% endif %}
+    <div class="nav-links" style="margin-right: 25px;">
+        {% if page_name == "login" %}
+        <a href="{{ url_for('register') }}">Sign Up</a>
+        {% elif page_name == "signup" %}
+        <a href="{{ url_for('login') }}">Log In</a>
+        {%elif session.get("user_id") and not session.get("is_admin") %}
+        <a href="{{ url_for('logout') }}">Log Out</a>
+        {% elif page_name == "reset" %}
+            {%if session.get("user_id")%}
+            <a href="{{ url_for('logout') }}">Log In Again</a>
+            {%else%}
+            <a href="{{ url_for('login') }}">Log In</a>
+            {%endif%}
+        {% endif %}
+        <a href="mailto:22f2001443@ds.study.iitm.ac.in">Contact</a>
+    </div>
+    
+</nav>
+
+
+
+
