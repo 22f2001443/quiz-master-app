@@ -1,0 +1,74 @@
+{% extends "user_dash.html" %}
+
+{% block content %}
+    <div class="content" >
+        
+        <div class="container" style="flex-wrap: wrap;">
+
+            <input type="text" id="myInput" onkeyup="myFunction('{{default_search_input }}')" class ="form-field d-flex align-items-cente" placeholder="Search for subjects" title="Type subject name">
+    <div class="table-container">
+        <table id ="myTable">
+            <thead>
+                <tr>
+                    <th>Quiz ID</th>
+                <th>SUBJECT NAME</th>
+                <th>MODULE NAME</th>
+                <th>FM</th>
+                
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for q in quizzes %}
+            {%if q.subject.class_ == user.class_%}
+            <tr><td>{{ q.id }}</td><td>{{q.subject.name}}</td><td>{{q.module}}</td><td>{{ q.questions|length }}</td><td><form action="{{ url_for('quiz_question') }}" method="POST"><input type="hidden" id="quiz_id" name="quiz_id" value={{q.id}}><button Style="color: White ; background-color: rgb(4, 109, 46);" class="status-btn">Attend</button></form></td>
+            </tr>
+            {%endif%}
+            
+            {% endfor %}   
+       </tbody>
+        </table>
+</div></div></div>
+
+
+
+
+
+<script>
+    function myFunction(default_search_input) {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    if (input) {
+        // Only set default_search_input if the input is empty
+        if (!input.value) {
+            input.value = default_search_input;
+        }
+    filter = input.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+        tr[i].style.display = "none"; // Hide row initially
+        td = tr[i].getElementsByTagName("td");
+        
+        for (j = 0; j < td.length; j++) { // Loop through all columns
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = ""; // Show row if match found
+                    break; // No need to check other columns, show row and exit
+                }
+            }
+        }
+    }
+}}
+document.addEventListener("DOMContentLoaded", function () {
+    var defaultSearchInput = "{{ default_search_input }}"; // Get from Jinja
+    myFunction(defaultSearchInput);
+});
+    </script>
+
+        </div>
+    </div>
+{% endblock %}

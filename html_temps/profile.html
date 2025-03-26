@@ -1,0 +1,22 @@
+{% extends "user_dash.html" %}
+
+{% block content %}
+    <div class="content">
+        <div class="container" style="flex-wrap: wrap; align-items: flex-start; height: auto;">
+            <div class="container box" style="align-items: flex-start; padding-top: 20px; height: auto;">
+                <div class="text-content" style="min-height: 80%;">
+                    <img src="{{ url_for('static', filename='Img/profile.png') }}" alt="Quiz Image">
+                    <h1 style="margin-top: 10px; font-weight: 600; color: #333;">{{ user.name }}</h2>
+                    <p style="margin: 5px 0; color: #666; font-size: 16px;">📧 {{ user.email }}</p>
+                    <p style="margin: 5px 0; color: #666; font-size: 18px;">DOB : {{ user.dob }}</p>
+                    <p style="margin: 5px 0; color: #3b82f6; font-size: 18px; font-weight: 500;">Semester : {{ user.class_.value }}</p>
+                </div></div><br><br>
+                <a href="{{ url_for('forget', email=user.email) }}">
+                    <button style="color: white; background-color: rgb(73, 133, 237); margin-top: 10px;" class="status-btn">
+                        Change Password
+                    </button>
+                </a>                
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Management</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #1e1e2d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            padding-right: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            margin-left: 10px;
+            font-weight: bold;}
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .box {
+            width: 30%;
+            height: 45%;
+            background-color: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        /* Sidebar */
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: hwb(233 38% 12% / 0.939);
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            padding: 15px;
+            text-align: left;
+        }
+
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar ul li a svg {
+            margin-right: 10px;
+        }
+
+        #sidebar ul li.active {
+            background-color: #1e1e2d;
+        }
+
+        #toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    .user-count {
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px; }
+
+    .label {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+    }
+
+        .box hr {
+            width: 80%;
+            height: 2px;
+            background-color: gray;
+            border: none;
+            margin: 10px 0;}
+        /* Main Content */
+        .content {
+            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);;
+
+            margin-left: 250px;
+            padding: 20px;
+        }
+    
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background: white;}
+
+    .bold {
+            font-weight: bold;
+        }
+
+        .status-btn {
+            padding: 8px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            min-width: 100px;
+            background-color: rgb(250, 43, 43);
+        }
+
+        .table-container {
+            width: 95%;
+            margin: auto;
+            overflow-x: auto;
+        }
+        .table-heading {
+    text-align: center; /* Center align the text */
+    font-size: 30px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+    margin: 20px 0; /* Add spacing above and below */
+    color: #333; /* Text color */
+}
+        /* Responsive Design */
+        
+
+        .form-field input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    font-size: 16px;
+    padding: 8px;}
+
+    #myInput {
+    background: transparent; /* Transparent background */
+    border: none; /* Remove borders */
+    border-bottom: 2px solid #333; /* Add underline */
+    outline: none; /* Remove outline on focus */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 20px; /* Some padding for better look */
+    width: 100%; /* Make it stretch across */
+    color: #000; /* Text color */
+    transition: border-color 0.3s ease-in-out; /* Smooth effect */
+}
+
+#myInput::placeholder {
+    color: rgba(0, 0, 0, 0.5); /* Light grey placeholder */
+}
+
+#myInput:focus {
+    border-bottom: 2px solid #007bff; /* Change underline color on focus */
+}
+    </style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='CSS/icon.css') }}">
+
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ messages[0] }}");
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    <!-- Top Navigation Bar -->
+    
+    {% include 'Nav/nav_admin.html' %}
+
+    <!-- Sidebar -->
+    {% include 'Nav/nav_admin_side.html' %}
+    <!--<nav id="sidebar" style="margin-top: 48px;">
+        <ul>
+            <li>
+                <span class="logo">ABC Quiz</span>
+                
+            </li>
+            <li>
+                <a href="{{ url_for('admin_dashboard')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M200-120q-33 0-56.5-23.5T120-200v-600q0-33 23.5-56.5T200-880h520q50 0 85 35t35 85v520q0 33-23.5 56.5T760-160H260q-17 0-28.5 11.5T220-120h-20Zm0-80h560v-520q0-17-11.5-28.5T720-760H200v560Zm80-120h400q17 0 28.5-11.5T720-360q0-17-11.5-28.5T680-400H280q-17 0-28.5 11.5T240-360q0 17 11.5 28.5T280-320Zm0-160h400q17 0 28.5-11.5T720-520q0-17-11.5-28.5T680-560H280q-17 0-28.5 11.5T240-520q0 17 11.5 28.5T280-480Zm-80 440v-720 720Z"/>
+                    </svg>
+                    <span>Subject Mangement</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M480-120q-17 0-28.5-11.5T440-160q0-17 11.5-28.5T480-200q17 0 28.5 11.5T520-160q0 17-11.5 28.5T480-120Zm-40-240q0-25 5-46t18-39q13-18 35-37t43-40q21-21 31-42t10-48q0-44-30-71t-75-27q-37 0-65.5 20T359-615q-11 13-24 13t-23-13q-10-13-7.5-27t13.5-27q18-25 57-50.5T480-760q78 0 125 45.5T652-608q0 35-11.5 63T602-488q-19 19-40 35t-32 30q-11 15-15.5 30.5T510-360q0 17-11.5 28.5T470-320q-17 0-28.5-11.5T430-360Z"/>
+                    </svg>
+                    <span>Quiz Mangement</span>
+                </a>
+            </li>
+            <li>
+                <a href="dashboard.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                        <path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Z"/>
+                    </svg>
+                    <span>Statistics</span>
+                </a>
+            </li>
+        </ul>
+    </nav>-->
+
+    <!-- Main Content -->
+    <div class="content" >
+
+
+<div>
+    <div>
+        
+        <h2 class="table-heading">Manage Quizzes</h2>
+    </div>
+    <input type="text" id="myInput" onkeyup="myFunction()" class ="form-field d-flex align-items-cente" placeholder="Search for quizzes" title="Type subject name">
+    <div class="table-container">
+        <center>
+        <table id ="myTable">
+            <thead>
+                <tr>
+                    <th>Quiz ID</th>
+                <th>Subject</th>
+                <th>Module</th>
+                <th>FM</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for q in quiz%}
+
+            <tr><td>{{ q.id }}</td><td>{% for subject in subjects %}
+                {% if subject.id == q.subject_id %}
+                    {{ subject.name }}
+                {% endif %}
+            {% endfor %} </td>
+            <td>{{ q.module }}</td><td>
+                {{ q.questions|length }}
+            </td><td><div style="display: flex; gap: 15px;justify-content: center; /* Centers buttons horizontally */
+    align-items: center;">
+                <form action="{{ url_for('del_quiz') }}" method="POST"><input type="hidden" id="quiz_id" name="quiz_id" value={{q.id}}><button Style="color: White" class="status-btn">Delete</button></form>
+                <form action="{{ url_for('info_questions') }}" method="POST"><input type="hidden" id="quiz_id" name="quiz_id" value="{{q.id}}"><button style="color: White;background-color: rgb(43, 126, 250);" class="status-btn" >Details</button></form>
+                <a href="{{url_for('add_questions', quiz_id = q.id)}}"><button style="color: White;background-color: rgb(1, 164, 99);" class="status-btn" >Add Questions</button></a>
+                <!--<form action="#" method="POST"><input type="hidden" id="quiz_id" name="quiz_id" value=""></form>-->
+
+            </div>
+            </td></tr>
+            {% endfor %}  
+
+             
+       </tbody>
+        </table></center>
+        <br><a href="{{ url_for('add_quiz') }}" style="text-decoration: none;">
+            <button style="width: 100%; margin-top: 30px; padding: 10px; font-size: 16px; background-color: hwb(233 38% 12% / 0.939); color: white; border: none; border-radius: 5px; cursor: pointer;">
+                + Add New Quiz
+            </button>
+        </a>
+</div></div></div>
+
+
+
+
+
+<script>
+    function myFunction() {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+        tr[i].style.display = "none"; // Hide row initially
+        td = tr[i].getElementsByTagName("td");
+        
+        for (j = 0; j < td.length; j++) { // Loop through all columns
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = ""; // Show row if match found
+                    break; // No need to check other columns, show row and exit
+                }
+            }
+        }
+    }
+}
+    </script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        
+
+        body {
+            background: /*linear-gradient(to bottom, #0f0c29, #302b63, #24243e);*/
+            radial-gradient(circle, rgb(241, 198, 217) 0%, rgb(167, 200, 237) 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-content {
+            max-width: 100%;
+        }
+        
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        .box {
+    position: relative;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px; /* Apply rounded corners */
+    z-index: 1; /* Ensure content is above the pseudo-element */
+}
+
+.box::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 5px;
+    border-radius: 20px; /* Match or slightly increase border-radius */
+    background: radial-gradient(circle, rgb(109, 97, 238) 0%, rgb(39, 30, 68) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none; /* Prevent pseudo-element from blocking clicks */
+    z-index: -1; /* Place it behind the content */
+}
+        .button {
+    position: relative;
+    background: #f4f4f6;
+    color: #6a5acd;
+    padding: 12px;
+    width: 100%;
+    border-radius: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border: none;
+}
+
+.button::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 5px;
+    border-radius: 25px; /* Adjust to match button's border-radius */
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+     .button:hover {
+            background: #010000;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-text {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #6a5acd;
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            margin-top: auto; 
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
+        }
+
+        .footer-container p {
+            margin: 5px 0;
+        }
+        .form-field select {flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #fff;
+    width: 100%; /* Make it full-width */
+    cursor: pointer;}
+        
+        .form-field select option {
+    font-size: 14px;
+}
+
+/* Add hover & focus effects */
+.form-field select:focus {
+    border-bottom: 2px solid #007bff; /* Blue bottom border on focus */
+}
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #6a5acd;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }   
+        .text-center a {
+    color: #6a5acd;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
+.form-field input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    font-size: 16px;
+    padding: 8px;}
+    </style>
+</head>
+<body>
+    
+    {% include 'Nav/navl1.html' %}
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ messages[0] }}");
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}<br>
+
+    <div class="container box">
+        <div class="text-content">
+            <h1>Register yourself as an user</h1>
+            <form action="/register" class="p-3 mt-3" method="POST" onsubmit="return validateForm()">
+                <div class="form-field d-flex align-items-center" style="padding: 10px;">
+                    <span class="far fa-user"></span>
+                    <!--<label for="name">Name:</label>-->
+                    <input type="text" name="name" id="name" placeholder="Username" required>
+                </div>
+                <div class="form-field d-flex align-items-center" style="padding: 10px; padding-bottom: 15px;">
+                    <span class="fas fa-key"></span>
+                    <input type="email" id="email" name="email" placeholder="Email" required >
+                </div>
+                <div class="form-field d-flex align-items-center" style="padding: 10px; padding-bottom: 15px;">
+                    <span class="fas fa-key"></span>
+                    <input type="date" id="dob" name="dob"  required >
+                </div>
+                <div class="form-field d-flex align-items-center" style="padding: 10px; padding-bottom: 15px;">
+                    <span class="fas fa-key"></span>
+                    <select id="level" name="level" required>
+                    <option value="">Select Semester</option>
+                    <option value="Foundation">Foundation</option>
+                    <option value="Diploma_DS">Dimploma in DS</option>
+                    <option value="Diploma_Prog">Diploma in Programming</option>
+                    <option value="BSc">BSc</option><option value="BS">BS</option>
+
+                </select></div>
+                <div class="form-field d-flex align-items-center" style="padding: 10px; padding-bottom: 15px;">
+                    <span class="fas fa-key"></span>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+            </div>
+                    <div class="form-field d-flex align-items-center" style="padding: 10px; padding-bottom: 15px;">
+                        <span class="fas fa-key"></span>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password"required>
+                </div>
+
+                <button type="submit" class="button btn mt-3" style="padding: 15px;">SignUp</button>
+            </form>
+            
+        </div>
+    </div>
+
+   
+
+    {% include 'Nav/navl1.html' %}
+<!--
+    <form action="/register" method="POST" onsubmit="return validateForm()">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+        
+        <label for="class">Lebel:</label>
+        <select id="class" name="class" required>
+            <option value="">Select Class</option>
+            <option value="Class 10">Class 10</option>
+            <option value="Class 11">Class 11</option>
+            <option value="Class 12">Class 12</option>
+        </select>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        
+        <button type="submit">Submit</button>
+    </form>
+-->
+<script>
+    function validateForm() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm_password').value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            alert('Please enter a valid email address.');
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match.');
+            return false;
+        }
+
+        return true;
+    }
+    
+</script>    
+{% include 'footer.html' %}
+</body>
+</html>
+
+

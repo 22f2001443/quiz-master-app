@@ -1,0 +1,329 @@
+<html>
+    <head>
+        <title>Quiz_{{quiz_details.id}}</title>
+        <style>
+            body {
+                background: /*linear-gradient(to bottom, #0f0c29, #302b63, #24243e);*/
+                radial-gradient(circle, rgb(241, 198, 217) 0%, rgb(167, 200, 237) 100%);}
+            /* Reset some basic styles */
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+    
+            /* Top Navbar */
+            .navbar {
+                background-color: #1e1e2d;
+                color: white;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 15px 20px;
+                padding-right: 5px;
+            }
+    
+            .nav-links a {
+                color: white;
+                text-decoration: none;
+                margin: 0 15px;
+                margin-left: 10px;
+                font-weight: bold;}
+    
+            .nav-links a:hover {
+                text-decoration: underline;
+            }
+            .container {
+                width: 100%;
+                height: 60vh;
+                /*display: flex;*/
+                justify-content: space-around;
+                align-items: center;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            }
+            .box {
+                width: 80%;
+                height: 45%;
+                background-color: #ffffff;
+                border-radius: 25px;
+                box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: 10px;
+            }
+            /* Sidebar */
+            #sidebar {
+                width: 250px;
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                top: 0;
+                background-color: hwb(233 38% 12% / 0.939);
+                color: white;
+                padding-top: 20px;
+                transition: width 0.3s ease-in-out;
+            }
+    
+            #sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+    
+            #sidebar ul li {
+                padding: 15px;
+                text-align: left;
+            }
+    
+            #sidebar ul li a {
+                color: white;
+                text-decoration: none;
+                display: flex;
+                align-items: center;
+            }
+    
+            #sidebar ul li a svg {
+                margin-right: 10px;
+            }
+    
+            #sidebar ul li.active {
+                background-color: #1e1e2d;
+            }
+    
+            #toggle-btn {
+                background: none;
+                border: none;
+                color: white;
+                cursor: pointer;
+            }
+            h4 {
+    font-family: 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+        .user-count {
+        font-size: 30px;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 5px; }
+    
+        .label {
+        font-size: 18px;
+        color: #666;
+        margin-top: 5px;
+        }
+    
+            .box hr {
+                width: 80%;
+                height: 2px;
+                background-color: gray;
+                border: none;
+                margin: 10px 0;}
+            /* Main Content */
+            .content {
+                background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);;
+    
+                margin-left: 250px;
+                padding: 20px;
+            }
+        
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    th, td {
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+        background: #f1f1f1;
+        font-weight: bold;
+    }
+    
+    tbody tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+    
+    tbody tr:nth-child(odd) {
+        background: white;}
+    
+        .bold {
+                font-weight: bold;
+            }
+    
+            .status-btn {
+                padding: 8px 5px;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: bold;
+                border: none;
+                cursor: pointer;
+                min-width: 100px;
+                background-color: rgb(250, 43, 43);
+            }
+    
+            .table-container {
+                width: 95%;
+                margin: auto;
+                overflow-x: auto;
+            }
+            .table-heading {
+        text-align: center; /* Center align the text */
+        font-size: 30px; /* Adjust font size */
+        font-weight: bold; /* Make it bold */
+        margin: 20px 0; /* Add spacing above and below */
+        color: #333; /* Text color */
+    }
+            /* Responsive Design */
+            
+    
+            .form-field input {
+        border: none;
+        outline: none;
+        width: 100%;
+        background: transparent;
+        font-size: 16px;
+        padding: 8px;}
+    
+        #myInput {
+        background: transparent; /* Transparent background */
+        border: none; /* Remove borders */
+        border-bottom: 2px solid #333; /* Add underline */
+        outline: none; /* Remove outline on focus */
+        font-size: 16px; /* Adjust font size */
+        padding: 5px;
+        padding-bottom: 10px;
+        margin-bottom: 20px; /* Some padding for better look */
+        width: 100%; /* Make it stretch across */
+        color: #000; /* Text color */
+        transition: border-color 0.3s ease-in-out; /* Smooth effect */
+    }
+    
+    #myInput::placeholder {
+        color: rgba(0, 0, 0, 0.5); /* Light grey placeholder */
+    }
+    
+    #myInput:focus {
+        border-bottom: 2px solid #007bff; /* Change underline color on focus */
+    }
+        </style>
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+          <script>
+              alert("{{ messages[0] }}");
+            </script>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+          <!-- Top Navigation Bar -->
+          
+          {% include 'Nav/nav_admin.html' %}
+          
+            <div class="container" style="flex-wrap: wrap; align-items: flex-start; height: auto;">
+                
+                <div class="container box" style="align-items: flex-start;justify-content: center; padding-top: 20px; height: auto; width:95% ">
+                   
+                    <div class="text-content" style="min-height: 80%;">
+                        <h2> Quiz Details</h2><br>
+                        <h4>Quiz ID: {{quiz_details.id}}</h4>
+                        <h4>Subject: {{quiz_details.subject.name}}</h4>
+                        <h4>Module :{{quiz_details.module}}</h4>
+    <div id="timer" style="
+    text-align: center; 
+    font-size: 20px; 
+    font-weight: bold; 
+    color: red; 
+    margin-bottom: 15px;">
+    Time Left: 4:00
+</div>
+                    </div></div><br><br>
+                    <form action="{{ url_for('check_scoore') }}" method="post" id="Quiz">
+                        <input type="hidden" name="quiz_id" value="{{ quiz_details.id }}">
+                    {%for q in question_details%}
+                <div class="container box" style="align-items: flex-start; margin-top: 25px; padding-top: 20px; height: auto; width:95% ">
+                            <div class="text-content" style="min-height: 80%;text-align: left; width:95% ">
+                                <h4>Question ID : {{q.id}}</h4><br>
+                                <h4>{{q.text}}</h4>
+                                <label>
+                                    <h4>
+                                    <input type="radio" name="question_{{ q.id }}" value="1">
+                                    &ensp;{{ q.option1 }}</h4>
+                                </label><br>
+                                <label><h4>
+                                    <input type="radio" name="question_{{ q.id }}" value="2">
+                                    &ensp;{{ q.option2 }}</h4>
+                                </label><br>
+                                <label><h4>
+                                    <input type="radio" name="question_{{ q.id }}" value="3">
+                                    &ensp;{{ q.option3 }}</h4>
+                                </label><br>
+                                <label><h4>
+                                    <input type="radio" name="question_{{ q.id }}" value="4">
+                                    &ensp;{{ q.option4 }}</h4>
+                                </label>
+                                                    </div></div>{%endfor%}
+                                                    <br><br>
+                                                    <button type="submit" id="submitButton" style="background-color: rgb(4, 109, 46); /* Dark green */
+                                                    color: white;
+                                                    padding: 10px 20px;
+                                                    font-size: 16px;
+                                                    border: none;
+                                                    border-radius: 5px;
+                                                    cursor: pointer;
+                                                    transition: 0.3s ease;">Submit</button>
+                                                </form>
+                    </div>
+    
+    
+    
+    
+                    <script>
+                        let timeLeft = 240; // 4 minutes (240 seconds)
+                    
+                        function startTimer() {
+                            let timerElement = document.getElementById('timer');
+                            let countdown = setInterval(() => {
+                                let minutes = Math.floor(timeLeft / 60);
+                                let seconds = timeLeft % 60;
+                                timerElement.innerHTML = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                                timeLeft--;
+                    
+                                if (timeLeft < 0) {
+                                    clearInterval(countdown);
+
+                                    
+                                    document.getElementById('Quiz').submit(); // Auto-submit the form
+                                }
+                            }, 1000);
+                        }
+                    
+                        window.onload = startTimer; // Start the timer when the page loads
+                    </script>
+    
+    
+
+
+
+
+
+
+
+    </body>
+</html>

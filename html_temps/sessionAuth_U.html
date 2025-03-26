@@ -1,0 +1,16 @@
+{% if session.get("user_id") and not session.get("is_admin") %}
+    {% if not session["is_admin"] %}  <!-- Allow only non-admins -->
+        User ID: {{ session["user_id"] }}  <!-- Corrected variable -->
+        <!-- Normal user is allowed access -->
+    {% else %}
+        <script>
+            alert("Admins are not allowed here!");
+            window.location.href = "{{ url_for('admin_dashboard') }}";  // Redirect admins to admin dashboard
+        </script>
+    {% endif %}
+{% else %}
+    <script>
+        alert("Unauthorized Access! Please log in.");
+        window.location.href = "{{ url_for('login') }}";  // Redirect unauthenticated users
+    </script>
+{% endif %}

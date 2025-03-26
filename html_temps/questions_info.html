@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questions</title>
+    <style>
+        body {
+            background: /*linear-gradient(to bottom, #0f0c29, #302b63, #24243e);*/
+            radial-gradient(circle, rgb(241, 198, 217) 0%, rgb(167, 200, 237) 100%);}
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #1e1e2d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            padding-right: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            margin-left: 10px;
+            font-weight: bold;}
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .box {
+            width: 30%;
+            height: 45%;
+            background-color: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        /* Sidebar */
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: hwb(233 38% 12% / 0.939);
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            padding: 15px;
+            text-align: left;
+        }
+
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar ul li a svg {
+            margin-right: 10px;
+        }
+
+        #sidebar ul li.active {
+            background-color: #1e1e2d;
+        }
+
+        #toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    .user-count {
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px; }
+
+    .label {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+    }
+
+        .box hr {
+            width: 80%;
+            height: 2px;
+            background-color: gray;
+            border: none;
+            margin: 10px 0;}
+        /* Main Content */
+        .content {
+            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);;
+
+            margin-left: 250px;
+            padding: 20px;
+        }
+    
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background: white;}
+
+    .bold {
+            font-weight: bold;
+        }
+
+        .status-btn {
+            padding: 8px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            min-width: 100px;
+            background-color: rgb(250, 43, 43);
+        }
+
+        .table-container {
+            width: 95%;
+            margin: auto;
+            overflow-x: auto;
+        }
+        .table-heading {
+    text-align: center; /* Center align the text */
+    font-size: 30px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+    margin: 20px 0; /* Add spacing above and below */
+    color: #333; /* Text color */
+}
+        /* Responsive Design */
+        
+
+        .form-field input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    font-size: 16px;
+    padding: 8px;}
+
+    #myInput {
+    background: transparent; /* Transparent background */
+    border: none; /* Remove borders */
+    border-bottom: 2px solid #333; /* Add underline */
+    outline: none; /* Remove outline on focus */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 20px; /* Some padding for better look */
+    width: 100%; /* Make it stretch across */
+    color: #000; /* Text color */
+    transition: border-color 0.3s ease-in-out; /* Smooth effect */
+}
+
+#myInput::placeholder {
+    color: rgba(0, 0, 0, 0.5); /* Light grey placeholder */
+}
+
+#myInput:focus {
+    border-bottom: 2px solid #007bff; /* Change underline color on focus */
+}
+    </style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='CSS/icon.css') }}">
+
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ messages[0] }}");
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    <!-- Top Navigation Bar -->
+    
+    {% include 'Nav/nav_admin.html' %}
+
+    <!-- Sidebar -->
+    {% include 'Nav/nav_admin_side.html' %}
+    
+    <!-- Main Content -->
+    <div class="content" >
+
+
+<div>
+    <div>
+        
+        <h2 class="table-heading">Questions for Quiz : {{quiz_id}}</h2>
+    </div>
+
+</div>
+<input type="text" id="myInput" onkeyup="myFunction()" class ="form-field d-flex align-items-cente" placeholder="Search for quizzes" title="Type subject name">
+    <div class="table-container">
+        <center>
+        <table id ="myTable">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                <th>Option 1</th>
+                <th>Option 2</th>
+                <th>Option 3</th>
+                <th>Option 4</th>
+                <th>Correct Option</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for q in questions%}
+
+            <tr><td>{{ q.text }}</td><td>{{q.option1}} </td>
+            <td>{{ q.option2}}</td><td>{{q.option3}} </td>
+            <td>{{ q.option4}}</td><td>
+                {{ q.correct_option}}
+            </td><td><div style="display: flex; gap: 15px;justify-content: center; /* Centers buttons horizontally */
+    align-items: center;">
+                <form action="{{ url_for('del_question') }}" method="POST"><input type="hidden" id="question_id" name="question_id" value={{q.id}}><button Style="color: White" class="status-btn">Delete</button></form>
+                
+            </div>
+            </td></tr>
+            {% endfor %}  
+
+             
+       </tbody>
+        </table><br>
+        <a href="{{ url_for('quiz_dashboard') }}"><button Style="color: White; background-color: hwb(0 6% 21% / 0.939);" class="status-btn">Go Back</button></a>
+    </center>
+</div></div></div>
+
+
+
+
+
+<script>
+    function myFunction() {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+        tr[i].style.display = "none"; // Hide row initially
+        td = tr[i].getElementsByTagName("td");
+        
+        for (j = 0; j < td.length; j++) { // Loop through all columns
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = ""; // Show row if match found
+                    break; // No need to check other columns, show row and exit
+                }
+            }
+        }
+    }
+}
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+</div></body></html>

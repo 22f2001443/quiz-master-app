@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started</title>
+    <style>
+        body {
+        background: /*linear-gradient(to bottom, #0f0c29, #302b63, #24243e);*/
+         radial-gradient(circle, rgb(241, 198, 217) 0%, rgb(167, 200, 237) 100%); 
+        height: 100vh; /* Ensures the gradient covers the entire viewport */
+        margin: 0; /* Removes default margins */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            flex-direction: column;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-content {
+            max-width: 60%;
+        }
+        
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            /*display: flex;*/
+            align-items: center;
+            gap: 3px;
+            background: #6a5acd;
+            color: white;
+            padding: 15px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: none;
+            
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        .button:hover {
+            background: #f0f0f0;}
+
+        .image-content img {
+            width: 350px;
+            max-height: 400px;
+        }
+
+        .image-content {
+            flex-shrink: 0;
+        }
+        .button:hover {
+            background: #483d8b;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-text {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #6a5acd;
+        }
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            margin-top: auto; 
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 0.9em;
+        }
+
+        .footer-container p {
+            margin: 5px 0;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+        }
+
+        .footer-links a {
+            color: #6a5acd;
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }   
+    </style>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <div class="nav-text" style="margin-left: 15px;">APP DEV I - Project (Jan'25)</div>
+        <div class="nav-links" style="margin-right: 25px;">
+            <a href="#">Project Report</a>
+            <a href="#">Demostration Video</a>
+            <a href="mailto:22f2001443@ds.study.iitm.ac.in">Contact</a>
+        </div>
+        
+    </nav>
+
+    <div class="container">
+        <div class="text-content">
+            <h1>Welcome to ABC Quiz Portal</h1>
+            <p>Take quizzes seamlessly with performence analysis.</p>
+            <a href="{{ url_for('login') }}" class="button" style="padding-top: 10px;">Get Started</a>
+        </div>
+        <div class="image-content">
+            <img src=" {{ url_for('static', filename='Img/cover_ball.png') }}" alt="Quiz Image">
+        </div>
+    </div>
+
+
+
+    {% include 'footer.html' %}
+    
+</body>
+</html>

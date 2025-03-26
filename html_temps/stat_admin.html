@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Management</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #1e1e2d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            padding-right: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            margin-left: 10px;
+            font-weight: bold;}
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .box {
+            width: 30%;
+            height: 45%;
+            background-color: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        /* Sidebar */
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: hwb(233 38% 12% / 0.939);
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            padding: 15px;
+            text-align: left;
+        }
+
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar ul li a svg {
+            margin-right: 10px;
+        }
+
+        #sidebar ul li.active {
+            background-color: #1e1e2d;
+        }
+
+        #toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    .user-count {
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px; }
+
+    .label {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+    }
+
+        .box hr {
+            width: 80%;
+            height: 2px;
+            background-color: gray;
+            border: none;
+            margin: 10px 0;}
+        /* Main Content */
+        .content2 {
+            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);;
+
+            margin-left: 250px;
+            padding: 20px;
+        }
+    
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background: white;}
+
+    .bold {
+            font-weight: bold;
+        }
+
+        .status-btn {
+            padding: 8px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            min-width: 100px;
+            background-color: red;
+        }
+
+        .table-container {
+            width: 95%;
+            margin: auto;
+            overflow-x: auto;
+        }
+        .table-heading {
+    text-align: center; /* Center align the text */
+    font-size: 30px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+    margin: 20px 0; /* Add spacing above and below */
+    color: #333; /* Text color */
+}
+        /* Responsive Design */
+        
+
+        .form-field input {
+    border: none;
+    border-bottom: 2px solid #1f7cf5; 
+    outline: none;
+    width: 100%;
+    background: transparent;
+    font-size: 16px;
+    padding: 8px;}
+
+    #myInput {
+    background: transparent; /* Transparent background */
+    border: none; /* Remove borders */
+    border-bottom: 2px solid #1f7cf5; /* Add underline */
+    outline: none; /* Remove outline on focus */
+    font-size: 16px; /* Adjust font size */
+    padding: 5px;
+    padding-bottom: 10px;
+    margin-bottom: 20px; /* Some padding for better look */
+    width: 100%; /* Make it stretch across */
+    color: #ffffff; /* Text color */
+    transition: border-color 0.3s ease-in-out; /* Smooth effect */
+}
+
+#myInput::placeholder {
+    color: rgba(255, 255, 255, 0.5); /* Light grey placeholder */
+}
+
+#myInput:focus {
+    border-bottom: 2px solid #007bff; /* Change underline color on focus */
+}
+    
+    
+    
+    
+.container2 {
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  width: 90%;
+  padding: 10px 0px;
+  text-align: center;
+  margin: auto;
+}
+.container2 .card {
+  /*max-width: 600px;*/
+  min-height: 140px;
+  min-width: 595px;
+
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #e3e3e3;
+  margin: 0 auto;
+}
+.tabs {
+  text-align: left;
+  position: relative;
+}
+.tabs input {
+  position: absolute;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.tabs input + label:hover {
+  color: #777;
+}
+.tabs .tabsShadow {
+  width: 100%;
+  padding: 10px;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
+  position: absolute;
+  height: 35px;
+  z-index: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.content .item {
+    width: 98%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+  position: absolute;
+  padding: 10px 20px;
+}
+
+#tab-1:checked ~ .glider {
+  left: 0px;
+}
+#tab-2:checked + label {
+  color: #51a14c;
+}
+#tab-2:checked ~ .glider {
+  background: linear-gradient(90deg, #51a14c 0%, #10c33e 100%);
+  box-shadow: 0px 0px 8px 0px rgba(47, 187, 12, 0.62);
+}
+
+#tab-3:checked + label {
+  color: #525252;
+}
+
+#tab-1:checked ~ section #content-1,
+#tab-2:checked ~ section #content-2,
+#tab-3:checked ~ section #content-3,
+#tab-4:checked ~ section #content-4 {
+  opacity: 1;
+  visibility: visible;
+}
+
+.tabs input + label {
+  margin: 12px -8px;
+  width: 15%;
+  transition: all 0.3s;
+  text-align: center;
+  border: none;
+  border-bottom: 0.5pt solid #1d1e22;
+  color: #e7e9f5;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  padding: 5pt 10pt;
+  vertical-align: top;
+  justify-content: flex-start;
+  background: #333;
+  box-shadow: 1px 1px 2px 1px #231f20;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 8pt;
+  background: #26292c;
+  margin-bottom: 0.5px;
+  border-radius: 7px 7px 0 0 !important;
+  border-top: 1px solid #3b3d3f;
+  letter-spacing: 0.1666666667em !important;
+  font-family: "antique-olive" !important;
+  background: hsl(232deg 6% 17%);
+  cursor: pointer;
+}
+
+.content {
+  margin: 0px auto;
+  text-align: left;
+  line-height: 20px;
+  height: 1200px;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgb(10 10 10 / 10%), 0 0 0 1px rgb(10 10 10 / 10%);
+  display: block;
+  padding: 1.25rem;
+  z-index: 2;
+  border-top: 1px solid #3b3d3f;
+  background: hsl(232deg 16% 15%);
+  position: relative;
+}
+
+.container2 .card {
+  /*max-width: 600px;*/
+  min-height: 140px;
+  border-radius: 10px;
+  border: none;
+  margin: 0 auto;
+  z-index: 4 !important;
+  position: relative;
+  background: linear-gradient(#141e30, #243b55);
+  background: #16181a;
+  border-top: 1px solid #3b3d3f;
+  background: hsl(232deg 18% 8%);
+}
+
+.content p {
+  margin: 10px 15px 10px 0;
+  letter-spacing: 0.75px;
+  font-size: 14pt;
+  font-style: normal;
+  color: #f0f2fc;
+  line-height: 30px;
+  margin-top: 10pt;
+  font-family: "freight-display-pro";
+  font-weight: 300 !important;
+}
+h2.tab-title.tab-warning,
+h2.tab-title.tab-success,
+h2.tab-title.tab-primary,
+h2.tab-title.tab-default {
+  display: inline-flex;
+  color: #fff;
+  background-position: bottom center;
+  margin-bottom: 0pt !important;
+  margin-top: 6pt;
+  height: 22pt;
+  text-fill-color: transparent !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  -webkit-background-clip: text !important;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  -ms-background-clip: text;
+  -ms-text-fill-color: transparent;
+  text-transform: capitalize;
+  font-size: 24px;
+  letter-spacing: 0px;
+  font-family: "Manrope" !important;
+  font-weight: 800 !important;
+}
+
+h2.tab-title.tab-default {
+  background: linear-gradient(10deg, #f7ec9c, #ff8651);
+}
+
+h2.tab-title.tab-success {
+  background: linear-gradient(10deg, #02ce85, #02ceab);
+}
+
+h2.tab-title.tab-primary {
+  background: linear-gradient(
+    60deg,
+    hsl(202deg 100% 75%),
+    hsl(205deg 100% 64%),
+    hsl(230deg 100% 75%),
+    hsl(270deg 100% 72%)
+  );
+}
+
+h2.tab-title.tab-warning {
+  background: linear-gradient(70deg, #c51574, #97389b);
+}
+
+.tabs input {
+  position: relative;
+  opacity: 0;
+  margin: auto !important;
+  padding: 0;
+}
+label.tab.tab-primary {
+  border-radius: 6pt 0 0 6pt;
+}
+label.tab.tab-warning {
+  border-radius: 0 6pt 6pt 0;
+}
+#tab-1:checked + label {
+  color: deepskyblue;
+}
+#tab-3:checked + label {
+  color: #ffadfa;
+  color: #ffaa75;
+}
+#tab-4:checked + label {
+  color: #ffadfa;
+}
+#tab-1:checked ~ .glider {
+  left: 1.6%;
+}
+
+#tab-2:checked ~ .glider {
+  left: 17.15%;
+}
+
+.glider {
+  width: 10%;
+  padding: 0px 13px;
+  height: 4.5px;
+  border-radius: 0 0 1px 1px;
+  position: absolute;
+  box-shadow: 0px 0px 8px 0px hsl(262deg 100% 70% / 70%);
+  background: linear-gradient(
+    113deg,
+    hsl(260deg 100% 64%) 0%,
+    hsl(190deg 100% 55%) 100%
+  );
+  transition: all 0.3s;
+  top: 36px;
+  z-index: 2;
+}
+
+span.numit {
+  font-size: 12pt;
+  font-family: "muli";
+  font-weight: 600;
+  text-shadow: 0.5px 0.5px 0.5px #e7e9f5;
+  color: #0e101a;
+  margin-right: 2px;
+  margin-left: -2px;
+  padding: 0;
+  color: aliceblue;
+  text-shadow: 0.5pt 0.5pt 0.5pt #2d3748;
+}    
+    </style>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='CSS/icon.css') }}">
+
+</head>
+<body>
+
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ messages[0] }}");
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    <!-- Top Navigation Bar -->
+    
+    {% include 'Nav/nav_admin.html' %}
+
+    <!-- Sidebar -->
+    {% include 'Nav/nav_admin_side.html' %}
+
+    <div class="content2" style="height:auto" >
+        
+        <div class="container" style="flex-wrap: wrap;height:auto">
+
+
+            <div class="container2" style="height:90%">
+                <div class="card tabs" style="height:auto">
+                  <input id="tab-1" type="radio" class="tab tab-selector" checked="checked" name="tab" />
+                  <label for="tab-1" class="tab tab-primary">Score Table</label>
+                  <input id="tab-2" type="radio" class="tab tab-selector" name="tab" />
+                  <label for="tab-2" class="tab tab-success">Diagrams</label>
+                  
+                  <div class="tabsShadow"></div>
+                  <div class="glider"></div>
+                  <section class="content" >
+                    <div class="item" id="content-1" style="height:auto">
+                      <h2 class="tab-title tab-primary">User Score</h2>
+                      <p><!--
+                        <input type="text" id="myInput" onkeyup="myFunction()" class ="" placeholder="Search" title="Type subject name" />
+                        STYLE="background: #a47dff;
+                        border: none;
+                        border-bottom: 25px solid #1f7cf5;
+                        outline: none;
+                        font-size: 16px;
+                        padding: 5px;
+                        padding-bottom: 10px;
+                        margin-bottom: 20px;
+                        width: 100%;
+                        color: #ffffff;
+                        z-index: 0;"/>-->
+                        <div class="table-container" style="height:auto">
+                            <table id ="myTable" STYLE="width: 100%;">
+                                <thead>
+                                    <tr>
+                                    <th>USER NAME</th>
+                                    <th>QUIZ ID</th>
+                                    <th>SUBJECT NAME</th>
+                                    <th>MODULE</th>
+                                    <TH>SCORE</TH>
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for s in scores %}
+        {% set quiz = quizzes | selectattr("id", "equalto", s.quiz_id) | first %}
+        {% set user = users | selectattr("id", "equalto", s.user_id) | first %}
+        {% set subject = subjects | selectattr("id", "equalto", quiz.subject_id) | first %}
+        
+        <tr>
+            <td>{{ user.name if user else "N/A" }}</td>
+            <td>{{ s.quiz_id }}</td>
+            <td>{{ subject.name if subject else "N/A" }}</td>
+            <td>{{ quiz.module if quiz else "N/A" }}</td>
+            <td>{{ s.score }}</td>
+        </tr>
+    {% endfor %}
+                            </tbody></table>                   </div>   </p>
+                    </div>
+                    <div class="item" id="content-2">
+                      <h2 class="tab-title tab-success">Semester-wise Student Distribution</h2>
+                      
+                      <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+                          <section>
+                              <span class="numit">
+                                  <img src="{{ url_for('static', filename='charts/pie_chart.png')}}" style="width: 90%; height: auto;">
+                              </span> 
+                          </section>
+                          <section>
+                              <span class="numit">
+                                  <img src="{{ url_for('static', filename='charts/bar_chart.png')}}" style="width: 90%; height: auto;">
+                              </span> 
+                          </section></div><div>  <br>                   
+             <h2 class="tab-title tab-success">User-Quiz distribution</h2><br>
+
+                          <div class="table-container" style="height:auto">
+                            <table id ="myTable" STYLE="width: 100%;">
+                                <thead>
+                                    <tr>
+                                    <th>User Name</th>
+                                    <TH>Semester</TH>
+                                    <TH>NO of Quiz</TH>
+                                    
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                              {% for user in users %}
+                              <tr>
+                                  
+                                  <td>{{ user.name }}</td>
+                                  <td>{{ user.class_.value }}</td>
+                                  <td>{{ user_quiz_counts.get(user.id, 0) }}</td>
+                              </tr>
+                              {% endfor %}
+
+                            </tbody>
+                            </table>
+                      </div>
+                  </div>
+                      
+                  </section>
+            </div>
+                </div>
+              </div>
+            </div>
+
+
+
+       </div>
+    </body></html> 

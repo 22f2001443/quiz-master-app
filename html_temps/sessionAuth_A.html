@@ -1,0 +1,17 @@
+{% if session.get("user_id") and session.get("is_admin") %}
+    {% if session["is_admin"] %}
+    <h1>
+        Welcome {{session["username"]}}!
+        <!-- User is an admin, allow access --></h1>
+    {% else %}
+        <script>
+            alert("Permission Denied!");
+            window.location.href = "{{ url_for('home') }}";  // Redirect non-admins to home
+        </script>
+    {% endif %}
+{% else %}
+    <script>
+        //alert("Unauthorized Access! Please log in.");
+        window.location.href = "{{ url_for('login') }}";  // Redirect unauthenticated users
+    </script>
+{% endif %}

@@ -1,0 +1,64 @@
+{% extends "user_dash.html" %}
+
+{% block content %}
+    <div class="content" >
+        
+        <div class="container" style="flex-wrap: wrap;">
+
+            <input type="text" id="myInput" onkeyup="myFunction('{{default_search_input }}')" class ="form-field d-flex align-items-cente" placeholder="Search for subjects" title="Type subject name">
+    <div class="table-container">
+        <table id ="myTable">
+            <thead>
+                <tr>
+                    <th>Quiz ID</th>
+                <th>SUBJECT NAME</th>
+                <th>MODULE NAME</th>
+                <th>OBTAINED MARKS (%)</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for q in score %}
+            <tr><td>{{ q.quiz.id }}</td><td>{{q.quiz.subject.name}}</td><td>{{q.quiz.module}}</td><td>{{ q.score }}</td>
+            </tr>
+            
+            {% endfor %}   
+       </tbody>
+        </table>
+</div></div></div>
+
+
+
+
+
+<script>
+    function myFunction(default_search_input) {
+    var input, filter, table, tr, td, i, j, txtValue;
+    input = document.getElementById("myInput");
+    
+    filter = input.value.toLowerCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+        tr[i].style.display = "none"; // Hide row initially
+        td = tr[i].getElementsByTagName("td");
+        
+        for (j = 0; j < td.length; j++) { // Loop through all columns
+            if (td[j]) {
+                txtValue = td[j].textContent || td[j].innerText;
+                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                    tr[i].style.display = ""; // Show row if match found
+                    break; // No need to check other columns, show row and exit
+                }
+            }
+        }
+    }
+}
+    </script>
+
+        </div>
+    </div>
+{% endblock %}

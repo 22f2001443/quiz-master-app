@@ -1,0 +1,326 @@
+<!--<html>
+    <body>
+        <nav id="sidebar">
+            <ul>
+              <li>
+                <span class="logo">coding2go</span>
+                <button onclick=toggleSidebar() id="toggle-btn">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"/></svg>
+                </button>
+              </li>
+              <li>
+                <a href="index.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M240-200h120v-200q0-17 11.5-28.5T400-440h160q17 0 28.5 11.5T600-400v200h120v-360L480-740 240-560v360Zm-80 0v-360q0-19 8.5-36t23.5-28l240-180q21-16 48-16t48 16l240 180q15 11 23.5 28t8.5 36v360q0 33-23.5 56.5T720-120H560q-17 0-28.5-11.5T520-160v-200h-80v200q0 17-11.5 28.5T400-120H240q-33 0-56.5-23.5T160-200Zm320-270Z"/></svg>
+                  <span>Home</span>
+                </a>
+              </li>
+              <li class="active">
+                <a href="dashboard.html">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M520-640v-160q0-17 11.5-28.5T560-840h240q17 0 28.5 11.5T840-800v160q0 17-11.5 28.5T800-600H560q-17 0-28.5-11.5T520-640ZM120-480v-320q0-17 11.5-28.5T160-840h240q17 0 28.5 11.5T440-800v320q0 17-11.5 28.5T400-440H160q-17 0-28.5-11.5T120-480Zm400 320v-320q0-17 11.5-28.5T560-520h240q17 0 28.5 11.5T840-480v320q0 17-11.5 28.5T800-120H560q-17 0-28.5-11.5T520-160Zm-400 0v-160q0-17 11.5-28.5T160-360h240q17 0 28.5 11.5T440-320v160q0 17-11.5 28.5T400-120H160q-17 0-28.5-11.5T120-160Zm80-360h160v-240H200v240Zm400 320h160v-240H600v240Zm0-480h160v-80H600v80ZM200-200h160v-80H200v80Zm160-320Zm240-160Zm0 240ZM360-280Z"/></svg>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+            <li>
+                <a href="{{ url_for('logout') }}">Logout</a> 
+            </li>
+            </ul></nav>
+
+        
+        <div> x
+            Hola Amigo!
+    
+            {% for user in users %}
+            <li>{{ user.id }} - {{ user.username }} ({{ user.email }})</li>
+            {% endfor %}   
+            Total User: {{total_users}}
+        </div>
+
+    </body>
+</html>
+
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        /* Reset some basic styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #1e1e2d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            padding-right: 5px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            width: 100%;
+            height: 40vh;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .box {
+            width: 30%;
+            height: 85%;
+            background-color: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 10px;
+        }
+        /* Sidebar */
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: hwb(233 38% 12% / 0.939);
+            color: white;
+            padding-top: 20px;
+            transition: width 0.3s ease-in-out;
+        }
+
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #sidebar ul li {
+            padding: 15px;
+            text-align: left;
+        }
+
+        #sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar ul li a svg {
+            margin-right: 10px;
+        }
+
+        #sidebar ul li.active {
+            background-color: #1e1e2d;
+        }
+
+        #toggle-btn {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+    .user-count {
+    font-size: 30px;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 5px; }
+
+    .label {
+    font-size: 18px;
+    color: #666;
+    margin-top: 5px;
+    }
+
+        .box hr {
+            width: 80%;
+            height: 2px;
+            background-color: gray;
+            border: none;
+            margin: 10px 0;}
+        /* Main Content */
+        .content {
+            background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);;
+
+            margin-left: 250px;
+            padding: 20px;
+        }
+    
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background: #f1f1f1;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+tbody tr:nth-child(odd) {
+    background: white;}
+
+    .bold {
+            font-weight: bold;
+        }
+
+        .status-btn {
+            padding: 8px 5px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            min-width: 100px;
+            background-color: red;
+        }
+
+        .table-container {
+            width: 95%;
+            margin: auto;
+            overflow-x: auto;
+        }
+        .table-heading {
+    text-align: center; /* Center align the text */
+    font-size: 30px; /* Adjust font size */
+    font-weight: bold; /* Make it bold */
+    margin: 20px 0; /* Add spacing above and below */
+    color: #333; /* Text color */
+}
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 60px;
+                text-align: center;
+            }
+
+            #sidebar ul li {
+                padding: 10px;
+            }
+
+            #sidebar ul li span {
+                display: none;
+            }
+
+            .content {
+                margin-left: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <script>
+        alert("{{ messages[0] }}");
+      </script>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+    <!-- Top Navigation Bar -->
+    
+    {% include 'Nav/nav_admin.html' %}
+
+    <!-- Sidebar -->
+    {% include 'Nav/nav_admin_side.html' %}
+    <!-- Main Content -->
+    <div class="content">
+        {% include 'sessionAuth_A.html' %}
+    <div class="container">
+       
+        <div class="box" style="flex-direction: column;
+        justify-content: center;
+        align-items: center;">
+            </p><div class="user-count">{{ total_users }}</div></p>
+            <br>
+            <hr>
+            <br><p></p><div class="label">User Count</div></p>   
+        </div>
+        <div class="box" style="flex-direction: column;
+        justify-content: center;
+        align-items: center;">
+            </p><div class="user-count">{% set subject_count = subjects |  list | length %}
+                {{ subject_count }}</div></p>
+            <br>
+            <hr>
+            <br><p></p><div class="label">Subject Count</div></p>   
+        </div>
+        <div class="box" style="flex-direction: column;
+        justify-content: center;
+        align-items: center;">
+            </p><div class="user-count">{% set quiz_count = quizzes |  list | length %}
+                {{ quiz_count }}</div></p>
+            <br>
+            <hr>
+            <br><p></p><div class="label">Quiz Count</div></p>   
+        </div>
+
+        
+    </div>
+
+
+<div>
+    <h2 class="table-heading">User Information Table</h2>
+</div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>USER ID</th>
+                <th>USER NAME</th>
+                <th>EMAIL</th>
+                <th>DOB</th>
+                <th>LEVEL</th>
+                <th>ACTION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            {% for user in users %}
+            <tr><td>{{ user.id }}</td><td>{{user.name}}</td><td>{{ user.email}}</td><td>{{ user.dob}}</td><td>{{ user.class_.value}}</td><td><form action="/remove_user" method="POST"><input type="hidden" id="user_id" name="user_id" value={{user.id}}><button Style="color: White" class="status-btn">Delete</button></form></td>
+            </tr>
+            
+            {% endfor %}   
+       
+</div>
+</body>
+</html>
